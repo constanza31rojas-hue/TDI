@@ -1,0 +1,11 @@
+/* Estilos sencillos para el sitio TDI */
+:root{
+  --bg:#f7f7fb;
+  --accent:#0070f3;
+  --text:#111827;
+}
+body{font-family:Inter, system-ui, Arial, sans-serif; margin:0; background:var(--bg); color:var(--text)}
+header{padding:48px 24px; text-align:center}
+main{max-width:780px;margin:24px auto;padding:0 16px}
+.btn{display:inline-block;margin-top:12px;padding:10px 16px;background:var(--accent);color:#fff;border-radius:8px;text-decoration:none}
+footer{padding:24px;text-align:center;color:#6b7280}
