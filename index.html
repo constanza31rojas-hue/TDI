@@ -7,528 +7,89 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --gold: #FFD700;
-    --gold-dark: #C9A800;
-    --gold-light: #FFF0A0;
-    --burgundy: #6B0F1A;
-    --burgundy-dark: #3D0A10;
-    --burgundy-mid: #8B1A24;
-    --cream: #FFF8E7;
-    --green-field: #1A5C2A;
-    --white: #FFFFFF;
-    --shadow: rgba(0,0,0,0.4);
+    --gold: #FFD700; --gold-dark: #C9A800; --gold-light: #FFF0A0;
+    --burgundy: #6B0F1A; --burgundy-dark: #3D0A10; --burgundy-mid: #8B1A24;
+    --cream: #FFF8E7; --green-field: #1A5C2A; --white: #FFFFFF;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'Barlow', sans-serif;
-    background: var(--burgundy-dark);
-    min-height: 100vh;
-    overflow-x: hidden;
-    position: relative;
-  }
-
-  /* ---- FONDO ANIMADO ---- */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background:
-      radial-gradient(ellipse at 20% 20%, rgba(107,15,26,0.8) 0%, transparent 60%),
-      radial-gradient(ellipse at 80% 80%, rgba(26,92,42,0.4) 0%, transparent 50%),
-      repeating-linear-gradient(
-        45deg,
-        transparent,
-        transparent 30px,
-        rgba(255,215,0,0.03) 30px,
-        rgba(255,215,0,0.03) 31px
-      );
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  #app {
-    position: relative;
-    z-index: 1;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px 16px 40px;
-  }
-
-  /* ---- HEADER ---- */
-  .header {
-    text-align: center;
-    margin-bottom: 30px;
-    animation: slideDown 0.6s ease;
-  }
+  body { font-family: 'Barlow', sans-serif; background: var(--burgundy-dark); min-height: 100vh; overflow-x: hidden; position: relative; }
+  body::before { content: ''; position: fixed; inset: 0; background: radial-gradient(ellipse at 20% 20%, rgba(107,15,26,0.8) 0%, transparent 60%), radial-gradient(ellipse at 80% 80%, rgba(26,92,42,0.4) 0%, transparent 50%), repeating-linear-gradient(45deg, transparent, transparent 30px, rgba(255,215,0,0.03) 30px, rgba(255,215,0,0.03) 31px); pointer-events: none; z-index: 0; }
+  #app { position: relative; z-index: 1; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 20px 16px 40px; }
+  .header { text-align: center; margin-bottom: 30px; animation: slideDown 0.6s ease; }
   .header .trophy { font-size: 2.2rem; }
-  .header h1 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(2.2rem, 8vw, 3.8rem);
-    color: var(--gold);
-    letter-spacing: 3px;
-    line-height: 1;
-    text-shadow: 2px 4px 12px rgba(0,0,0,0.5);
-  }
-  .header h2 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: clamp(0.9rem, 3vw, 1.2rem);
-    color: var(--gold-light);
-    letter-spacing: 6px;
-    font-weight: 400;
-    margin-top: 4px;
-    opacity: 0.85;
-  }
-  .gold-line {
-    width: 100px;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    margin: 10px auto 0;
-  }
-
-  /* ---- PANTALLAS ---- */
-  .screen {
-    display: none;
-    width: 100%;
-    max-width: 700px;
-    animation: fadeIn 0.5s ease;
-  }
+  .header h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.2rem, 8vw, 3.8rem); color: var(--gold); letter-spacing: 3px; line-height: 1; text-shadow: 2px 4px 12px rgba(0,0,0,0.5); }
+  .header h2 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(0.9rem, 3vw, 1.2rem); color: var(--gold-light); letter-spacing: 6px; font-weight: 400; margin-top: 4px; opacity: 0.85; }
+  .gold-line { width: 100px; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 10px auto 0; }
+  .screen { display: none; width: 100%; max-width: 700px; animation: fadeIn 0.5s ease; }
   .screen.active { display: block; }
-
-  /* ---- PANTALLA 1: SELECCIÓN ---- */
-  .section-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(1.4rem, 5vw, 2rem);
-    color: var(--gold);
-    text-align: center;
-    letter-spacing: 2px;
-    margin-bottom: 6px;
-  }
-  .section-subtitle {
-    font-family: 'Barlow Condensed', sans-serif;
-    color: var(--gold-light);
-    text-align: center;
-    font-size: 0.95rem;
-    letter-spacing: 2px;
-    opacity: 0.7;
-    margin-bottom: 24px;
-  }
-
-  .player-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
-  }
-  @media (min-width: 480px) {
-    .player-grid { grid-template-columns: repeat(4, 1fr); }
-  }
-
-  .player-btn {
-    background: linear-gradient(145deg, var(--burgundy-mid), var(--burgundy));
-    border: 2px solid rgba(255,215,0,0.3);
-    border-radius: 12px;
-    padding: 18px 10px 14px;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    color: var(--white);
-    position: relative;
-    overflow: hidden;
-  }
-  .player-btn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(255,215,0,0.1) 0%, transparent 60%);
-    opacity: 0;
-    transition: opacity 0.25s;
-  }
-  .player-btn:hover {
-    border-color: var(--gold);
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.4), 0 0 16px rgba(255,215,0,0.2);
-  }
+  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.4rem, 5vw, 2rem); color: var(--gold); text-align: center; letter-spacing: 2px; margin-bottom: 6px; }
+  .section-subtitle { font-family: 'Barlow Condensed', sans-serif; color: var(--gold-light); text-align: center; font-size: 0.95rem; letter-spacing: 2px; opacity: 0.7; margin-bottom: 24px; }
+  .player-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  @media (min-width: 480px) { .player-grid { grid-template-columns: repeat(4, 1fr); } }
+  .player-btn { background: linear-gradient(145deg, var(--burgundy-mid), var(--burgundy)); border: 2px solid rgba(255,215,0,0.3); border-radius: 12px; padding: 18px 10px 14px; cursor: pointer; transition: all 0.25s ease; display: flex; flex-direction: column; align-items: center; gap: 10px; color: var(--white); position: relative; overflow: hidden; }
+  .player-btn::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,215,0,0.1) 0%, transparent 60%); opacity: 0; transition: opacity 0.25s; }
+  .player-btn:hover { border-color: var(--gold); transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.4), 0 0 16px rgba(255,215,0,0.2); }
   .player-btn:hover::before { opacity: 1; }
   .player-btn:active { transform: translateY(-1px); }
-
-  .player-avatar {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    border: 2px solid rgba(255,215,0,0.5);
-    object-fit: cover;
-    background: linear-gradient(135deg, var(--burgundy-dark), #2a0d14);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.8rem;
-    overflow: hidden;
-    flex-shrink: 0;
-  }
-  .player-avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-  .player-avatar .fallback-icon { display: block; }
-  .player-avatar img.loaded ~ .fallback-icon { display: none; }
-
-  .player-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.1rem;
-    letter-spacing: 1px;
-    color: var(--gold-light);
-    text-align: center;
-  }
-  .player-number {
-    position: absolute;
-    top: 6px;
-    right: 8px;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.1rem;
-    color: rgba(255,215,0,0.4);
-  }
-
-  /* ---- PANTALLA 2: SOBRE / PISTAS ---- */
-  .envelope-anim {
-    text-align: center;
-    margin-bottom: 24px;
-  }
-  .envelope-icon {
-    font-size: 4rem;
-    display: inline-block;
-    animation: bounceIn 0.7s cubic-bezier(0.36,0.07,0.19,0.97);
-  }
-  .envelope-text {
-    font-family: 'Barlow Condensed', sans-serif;
-    color: var(--gold-light);
-    font-size: 1.1rem;
-    letter-spacing: 3px;
-    margin-top: 8px;
-    opacity: 0.8;
-  }
-
-  .clues-card {
-    background: linear-gradient(145deg, rgba(107,15,26,0.9), rgba(61,10,16,0.95));
-    border: 1px solid rgba(255,215,0,0.3);
-    border-radius: 16px;
-    padding: 24px;
-    margin-bottom: 28px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-  }
-  .clue-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    padding: 12px 0;
-    border-bottom: 1px solid rgba(255,215,0,0.1);
-    animation: slideLeft 0.4s ease both;
-  }
+  .player-avatar { width: 70px; height: 70px; border-radius: 50%; border: 2px solid rgba(255,215,0,0.5); background: linear-gradient(135deg, var(--burgundy-dark), #2a0d14); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; overflow: hidden; flex-shrink: 0; }
+  .player-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .player-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 1px; color: var(--gold-light); text-align: center; }
+  .player-number { position: absolute; top: 6px; right: 8px; font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; color: rgba(255,215,0,0.4); }
+  .envelope-anim { text-align: center; margin-bottom: 24px; }
+  .envelope-icon { font-size: 4rem; display: inline-block; animation: bounceIn 0.7s cubic-bezier(0.36,0.07,0.19,0.97); }
+  .envelope-text { font-family: 'Barlow Condensed', sans-serif; color: var(--gold-light); font-size: 1.1rem; letter-spacing: 3px; margin-top: 8px; opacity: 0.8; }
+  .clues-card { background: linear-gradient(145deg, rgba(107,15,26,0.9), rgba(61,10,16,0.95)); border: 1px solid rgba(255,215,0,0.3); border-radius: 16px; padding: 24px; margin-bottom: 28px; box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
+  .clue-item { display: flex; align-items: flex-start; gap: 14px; padding: 12px 0; border-bottom: 1px solid rgba(255,215,0,0.1); animation: slideLeft 0.4s ease both; }
   .clue-item:last-child { border-bottom: none; }
-  .clue-item:nth-child(1) { animation-delay: 0.2s; }
-  .clue-item:nth-child(2) { animation-delay: 0.4s; }
-  .clue-item:nth-child(3) { animation-delay: 0.6s; }
-  .clue-num {
-    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-    color: var(--burgundy-dark);
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1rem;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    font-weight: 900;
-  }
-  .clue-text {
-    color: var(--cream);
-    font-size: 0.95rem;
-    line-height: 1.5;
-    padding-top: 5px;
-  }
-
-  .pick-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(1.3rem, 4vw, 1.8rem);
-    color: var(--gold);
-    text-align: center;
-    letter-spacing: 2px;
-    margin-bottom: 16px;
-  }
-
-  /* ---- LÁMINAS ---- */
-  .laminas-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-  }
-  @media (min-width: 500px) {
-    .laminas-grid { grid-template-columns: repeat(4, 1fr); }
-  }
-
-  .lamina {
-    background: linear-gradient(160deg, #f8f0dc 0%, #e8d8a0 100%);
-    border-radius: 10px;
-    padding: 10px 8px 8px;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    border: 2px solid rgba(255,215,0,0.6);
-    animation: cardIn 0.4s ease both;
-  }
-  .lamina:nth-child(1) { animation-delay: 0.05s; }
-  .lamina:nth-child(2) { animation-delay: 0.1s; }
-  .lamina:nth-child(3) { animation-delay: 0.15s; }
-  .lamina:nth-child(4) { animation-delay: 0.2s; }
-  .lamina:nth-child(5) { animation-delay: 0.25s; }
-  .lamina:nth-child(6) { animation-delay: 0.3s; }
-  .lamina:nth-child(7) { animation-delay: 0.35s; }
-
-  /* Efecto holográfico en el borde */
-  .lamina::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 8px;
-    background: linear-gradient(135deg,
-      rgba(255,255,255,0.4) 0%,
-      transparent 40%,
-      rgba(255,215,0,0.2) 100%);
-    pointer-events: none;
-  }
-  .lamina::after {
-    content: '★';
-    position: absolute;
-    top: 4px;
-    right: 6px;
-    color: var(--gold);
-    font-size: 0.7rem;
-    opacity: 0.7;
-  }
-
-  .lamina:hover {
-    transform: translateY(-6px) scale(1.04);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.5), 0 0 20px rgba(255,215,0,0.4);
-    border-color: var(--gold);
-  }
+  .clue-item:nth-child(2) { animation-delay: 0.2s; }
+  .clue-item:nth-child(3) { animation-delay: 0.4s; }
+  .clue-item:nth-child(4) { animation-delay: 0.6s; }
+  .clue-num { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: var(--burgundy-dark); font-family: 'Bebas Neue', sans-serif; font-size: 1rem; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 900; }
+  .clue-text { color: var(--cream); font-size: 0.95rem; line-height: 1.5; padding-top: 5px; }
+  .pick-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.3rem, 4vw, 1.8rem); color: var(--gold); text-align: center; letter-spacing: 2px; margin-bottom: 16px; }
+  .laminas-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  @media (min-width: 500px) { .laminas-grid { grid-template-columns: repeat(4, 1fr); } }
+  .lamina { background: linear-gradient(160deg, #f8f0dc 0%, #e8d8a0 100%); border-radius: 10px; padding: 10px 8px 8px; cursor: pointer; transition: all 0.25s ease; position: relative; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.3); border: 2px solid rgba(255,215,0,0.6); animation: cardIn 0.4s ease both; }
+  .lamina:nth-child(1){animation-delay:0.05s}.lamina:nth-child(2){animation-delay:0.1s}.lamina:nth-child(3){animation-delay:0.15s}.lamina:nth-child(4){animation-delay:0.2s}.lamina:nth-child(5){animation-delay:0.25s}.lamina:nth-child(6){animation-delay:0.3s}.lamina:nth-child(7){animation-delay:0.35s}
+  .lamina::before { content: ''; position: absolute; inset: 0; border-radius: 8px; background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, transparent 40%, rgba(255,215,0,0.2) 100%); pointer-events: none; }
+  .lamina::after { content: '★'; position: absolute; top: 4px; right: 6px; color: var(--gold); font-size: 0.7rem; opacity: 0.7; }
+  .lamina:hover { transform: translateY(-6px) scale(1.04); box-shadow: 0 12px 28px rgba(0,0,0,0.5), 0 0 20px rgba(255,215,0,0.4); border-color: var(--gold); }
   .lamina:active { transform: scale(0.97); }
-
-  .lamina-photo {
-    width: 100%;
-    aspect-ratio: 3/4;
-    border-radius: 6px;
-    overflow: hidden;
-    background: linear-gradient(135deg, var(--burgundy-dark) 0%, var(--green-field) 100%);
-    margin-bottom: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.2rem;
-    position: relative;
-  }
-  .lamina-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-  .lamina-country-stripe {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--burgundy), var(--gold), var(--green-field));
-  }
-  .lamina-name {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: var(--burgundy-dark);
-    text-align: center;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    padding: 2px 0;
-  }
-
-  /* ---- PANTALLA 4: RESULTADO ---- */
-  .result-card {
-    text-align: center;
-    padding: 30px 20px;
-  }
-  .result-icon {
-    font-size: 5rem;
-    margin-bottom: 16px;
-    display: block;
-    animation: bounceIn 0.6s ease;
-  }
-  .result-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(2rem, 7vw, 3rem);
-    letter-spacing: 2px;
-    margin-bottom: 10px;
-  }
+  .lamina-photo { width: 100%; aspect-ratio: 3/4; border-radius: 6px; overflow: hidden; background: linear-gradient(135deg, var(--burgundy-dark) 0%, var(--green-field) 100%); margin-bottom: 6px; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; position: relative; }
+  .lamina-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .lamina-country-stripe { position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--burgundy), var(--gold), var(--green-field)); }
+  .lamina-name { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; font-weight: 700; color: var(--burgundy-dark); text-align: center; letter-spacing: 1px; text-transform: uppercase; padding: 2px 0; }
+  .result-card { text-align: center; padding: 30px 20px; }
+  .result-icon { font-size: 5rem; margin-bottom: 16px; display: block; animation: bounceIn 0.6s ease; }
+  .result-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 7vw, 3rem); letter-spacing: 2px; margin-bottom: 10px; }
   .result-title.success { color: var(--gold); }
-  .result-title.error { color: #FF6B6B; }
-  .result-msg {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1.1rem;
-    color: var(--cream);
-    letter-spacing: 1px;
-    margin-bottom: 28px;
-    line-height: 1.5;
-  }
-
-  /* Confeti */
-  .confetti-container {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 999;
-    overflow: hidden;
-  }
-  .confetti-piece {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    top: -10px;
-    opacity: 0;
-    animation: confettiFall linear both;
-    border-radius: 1px;
-  }
-
-  /* Botones UI */
-  .btn-primary {
-    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-    color: var(--burgundy-dark);
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.1rem;
-    letter-spacing: 2px;
-    border: none;
-    border-radius: 8px;
-    padding: 14px 32px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-  }
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-    background: linear-gradient(135deg, var(--gold-light), var(--gold));
-  }
-  .btn-secondary {
-    background: transparent;
-    color: var(--gold-light);
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.9rem;
-    letter-spacing: 2px;
-    border: 1px solid rgba(255,215,0,0.3);
-    border-radius: 8px;
-    padding: 10px 24px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    margin-left: 12px;
-  }
+  .result-msg { font-family: 'Barlow Condensed', sans-serif; font-size: 1.1rem; color: var(--cream); letter-spacing: 1px; margin-bottom: 28px; line-height: 1.5; }
+  .confetti-container { position: fixed; inset: 0; pointer-events: none; z-index: 999; overflow: hidden; }
+  .confetti-piece { position: absolute; width: 8px; height: 8px; top: -10px; opacity: 0; animation: confettiFall linear both; border-radius: 1px; }
+  .btn-primary { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: var(--burgundy-dark); font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 2px; border: none; border-radius: 8px; padding: 14px 32px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+  .btn-secondary { background: transparent; color: var(--gold-light); font-family: 'Barlow Condensed', sans-serif; font-size: 0.9rem; letter-spacing: 2px; border: 1px solid rgba(255,215,0,0.3); border-radius: 8px; padding: 10px 24px; cursor: pointer; transition: all 0.2s ease; }
   .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
-
   .btn-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
-
-  /* ---- BARRA DE PROGRESO / STICKER COLECCIONADO ---- */
-  .success-pair-card {
-    background: linear-gradient(145deg, rgba(26,92,42,0.6), rgba(61,10,16,0.6));
-    border: 2px solid var(--gold);
-    border-radius: 14px;
-    padding: 20px;
-    margin: 20px auto;
-    max-width: 320px;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    animation: slideUp 0.5s ease 0.3s both;
-  }
-  .pair-sticker {
-    font-size: 2.5rem;
-    flex-shrink: 0;
-  }
+  .success-pair-card { background: linear-gradient(145deg, rgba(26,92,42,0.6), rgba(61,10,16,0.6)); border: 2px solid var(--gold); border-radius: 14px; padding: 20px; margin: 20px auto; max-width: 320px; display: flex; align-items: center; gap: 18px; animation: slideUp 0.5s ease 0.3s both; }
+  .pair-sticker { font-size: 2.5rem; flex-shrink: 0; }
   .pair-info { text-align: left; }
-  .pair-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    color: var(--gold-light);
-    font-size: 0.75rem;
-    letter-spacing: 3px;
-    opacity: 0.7;
-    text-transform: uppercase;
-  }
-  .pair-names {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.4rem;
-    color: var(--gold);
-    letter-spacing: 1px;
-  }
-
-  /* Animación shake en error */
-  .lamina.shake {
-    animation: shake 0.4s ease !important;
-    border-color: #FF6B6B !important;
-  }
-
-  /* ---- KEYFRAMES ---- */
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes slideDown {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes slideLeft {
-    from { opacity: 0; transform: translateX(-20px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes bounceIn {
-    0% { transform: scale(0.3); opacity: 0; }
-    60% { transform: scale(1.1); }
-    80% { transform: scale(0.95); }
-    100% { transform: scale(1); opacity: 1; }
-  }
-  @keyframes cardIn {
-    from { opacity: 0; transform: scale(0.8) rotateY(15deg); }
-    to { opacity: 1; transform: scale(1) rotateY(0); }
-  }
-  @keyframes shake {
-    0%,100% { transform: translateX(0); }
-    20% { transform: translateX(-8px) rotate(-2deg); }
-    40% { transform: translateX(8px) rotate(2deg); }
-    60% { transform: translateX(-5px) rotate(-1deg); }
-    80% { transform: translateX(5px) rotate(1deg); }
-  }
-  @keyframes confettiFall {
-    0% { opacity: 1; transform: translateY(0) rotate(0deg); }
-    100% { opacity: 0; transform: translateY(110vh) rotate(720deg); }
-  }
+  .pair-label { font-family: 'Barlow Condensed', sans-serif; color: var(--gold-light); font-size: 0.75rem; letter-spacing: 3px; opacity: 0.7; text-transform: uppercase; }
+  .pair-names { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; color: var(--gold); letter-spacing: 1px; }
+  .lamina.shake { animation: shake 0.4s ease !important; border-color: #FF6B6B !important; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)} }
+  @keyframes slideDown { from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)} }
+  @keyframes slideLeft { from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)} }
+  @keyframes slideUp { from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)} }
+  @keyframes bounceIn { 0%{transform:scale(0.3);opacity:0}60%{transform:scale(1.1)}80%{transform:scale(0.95)}100%{transform:scale(1);opacity:1} }
+  @keyframes cardIn { from{opacity:0;transform:scale(0.8) rotateY(15deg)}to{opacity:1;transform:scale(1) rotateY(0)} }
+  @keyframes shake { 0%,100%{transform:translateX(0)}20%{transform:translateX(-8px) rotate(-2deg)}40%{transform:translateX(8px) rotate(2deg)}60%{transform:translateX(-5px) rotate(-1deg)}80%{transform:translateX(5px) rotate(1deg)} }
+  @keyframes confettiFall { 0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(110vh) rotate(720deg)} }
 </style>
 </head>
 <body>
-
 <div id="confetti-container" class="confetti-container"></div>
-
 <div id="app">
-  <!-- HEADER -->
   <div class="header">
     <div class="trophy">⚽</div>
     <h1>ÁLBUM COJEFATURAS</h1>
@@ -536,54 +97,42 @@
     <div class="gold-line"></div>
   </div>
 
-  <!-- ==============================
-       PANTALLA 1: SELECCIÓN DE JUGADOR
-  ================================= -->
   <div id="screen1" class="screen active">
     <div class="section-title">SELECCIONA TU JUGADOR</div>
     <div class="section-subtitle">¿QUIÉN ERES TÚ?</div>
-    <div class="player-grid" id="player-grid">
-      <!-- Se genera con JS -->
-    </div>
+    <div class="player-grid" id="player-grid"></div>
   </div>
 
-  <!-- ==============================
-       PANTALLA 2+3: SOBRE Y LÁMINAS
-  ================================= -->
   <div id="screen2" class="screen">
     <div class="envelope-anim">
       <div class="envelope-icon">✉️</div>
       <div class="envelope-text">ABRIENDO TU SOBRE...</div>
     </div>
-
-    <div class="clues-card" id="clues-container">
-      <!-- Pistas generadas con JS -->
-    </div>
-
+    <div class="clues-card" id="clues-container"></div>
     <div class="pick-title">¿QUIÉN ES TU COJEFE? ELIGE UNA LÁMINA</div>
-    <div class="laminas-grid" id="laminas-grid">
-      <!-- Láminas generadas con JS -->
-    </div>
-
+    <div class="laminas-grid" id="laminas-grid"></div>
     <div class="btn-row" style="margin-top:24px">
       <button class="btn-secondary" onclick="goToScreen(1)">← Cambiar jugador</button>
     </div>
   </div>
 
-  <!-- ==============================
-       PANTALLA 4: RESULTADO
-  ================================= -->
   <div id="screen4" class="screen">
-    <div class="result-card" id="result-content">
-      <!-- Generado con JS -->
-    </div>
+    <div class="result-card" id="result-content"></div>
   </div>
 </div>
 
 <script>
 // =============================================
-//  DATOS DEL JUEGO — EDITA AQUÍ TUS PISTAS
-//  Y COLOCA LAS URLs DE LAS FOTOS
+//  DATOS DEL JUEGO
+//
+//  LÓGICA DE PISTAS:
+//  Cada jugador tiene sus propias "pistas".
+//  Esas pistas SON LAS QUE ÉL/ELLA VE en pantalla
+//  y deben describir a su COJEFE (no a sí mismo).
+//
+//  Ejemplo: ROCI ve las pistas → esas pistas
+//  describen a VAQUERO para que Roci lo adivine.
+//  VAQUERO ve sus pistas → esas describen a ROCI.
 // =============================================
 
 const JUGADORES = [
@@ -591,102 +140,110 @@ const JUGADORES = [
     id: "roci",
     nombre: "Roci",
     pareja_id: "vaquero",
-    foto: "https://raw.githubusercontent.com/constanza31rojas-hue/TDI/main/images/roci.png",
+    foto: "",   // ▼ URL directa de la foto de Roci
     emoji: "👩",
+    // Roci ve estas pistas → deben describir a VAQUERO
     pistas: [
-      "Para coordinar con ella ahora mismo vas a necesitar una buena conexión internacional",
-      "Es la reina indiscutida de la planificación.",
-      "A pesar de ser tan prolija, su apodo no le hace mucha justicia: le dicen como a un pequeño roedor como en aquella película"
+      "Pista 1 sobre VAQUERO: algo genérico y misterioso...",
+      "Pista 2 sobre VAQUERO: algo específico de su forma de trabajar...",
+      "Pista 3 sobre VAQUERO: un detalle gracioso de su personalidad 😄"
     ]
   },
   {
     id: "vaquero",
     nombre: "Vaquero",
     pareja_id: "roci",
-    foto: "https://raw.githubusercontent.com/constanza31rojas-hue/TDI/main/images/vaquero.png",
+    foto: "",   // ▼ URL directa de la foto de Vaquero
     emoji: "🤠",
+    // Vaquero ve estas pistas → deben describir a ROCI
     pistas: [
-      "Tiene un lado artístico muy refinado y clásico: sus manos son capaces de crear hermosas melodías",
-      "Sin embargo, por su apodo, uno esperaría verlo llegando a las reuniones a caballo, usando sombrero, botas y con un lazo en la mano.",
-      "Esta mezcla única entre músico de orquesta y personaje del Viejo Oeste lo hace inconfundible."
+      "Pista 1 sobre ROCI: algo genérico y misterioso...",
+      "Pista 2 sobre ROCI: algo específico de su forma de trabajar...",
+      "Pista 3 sobre ROCI: un detalle gracioso de su personalidad 😄"
     ]
   },
   {
     id: "marti",
     nombre: "Marti",
     pareja_id: "fabio",
-    foto: "https://raw.githubusercontent.com/constanza31rojas-hue/TDI/main/images/marti.png",
+    foto: "",   // ▼ URL directa de la foto de Marti
     emoji: "👩‍💼",
+    // Marti ve estas pistas → deben describir a FABIO
     pistas: [
-      "Si necesitas información clasificada, ella es tu contacto. Tiene unas habilidades de espionaje tan buenas que hasta el FBI le pediría consejos.",
-      "Su apellido tiene muchísima personalidad, suena casi como una marca de lujo italiana o un plato muy sofisticado.",
-      "Se entera de todo antes que el resto. Entre sus dotes de investigadora privada y ese apellido europeo, es una agente encubierta de primer nivel."
+      "Pista 1 sobre FABIO: algo genérico y misterioso...",
+      "Pista 2 sobre FABIO: algo específico de su forma de trabajar...",
+      "Pista 3 sobre FABIO: un detalle gracioso de su personalidad 😄"
     ]
   },
   {
     id: "fabio",
     nombre: "Fabio",
     pareja_id: "marti",
-    foto: "https://raw.githubusercontent.com/constanza31rojas-hue/TDI/main/images/fabio.png",
+    foto: "",   // ▼ URL directa de la foto de Fabio
     emoji: "👨‍💼",
+    // Fabio ve estas pistas → deben describir a MARTI
     pistas: [
-      "El primer gran misterio de este jugador es su propia identidad: el nombre por el que todos lo conocen en el equipo... ¡no es su nombre real!",
-      "Si hay que levantar una estructura, él es la voz de la experiencia. Conoce tanto de herramientas y armado en terreno que podría dirigir una cuadrilla él solo.",
-      "Entre que usa un alias como si estuviera en el programa de protección de testigos y sus tremendas habilidades de maestro constructor, es un cojefe todoterreno."
+      "Pista 1 sobre MARTI: algo genérico y misterioso...",
+      "Pista 2 sobre MARTI: algo específico de su forma de trabajar...",
+      "Pista 3 sobre MARTI: un detalle gracioso de su personalidad 😄"
     ]
   },
   {
     id: "pipeta",
     nombre: "Pipeta",
     pareja_id: "conyb",
-    foto: "https://raw.githubusercontent.com/constanza31rojas-hue/TDI/main/images/pipeta.png",
+    foto: "",   // ▼ URL directa de la foto de Pipeta
     emoji: "🧪",
+    // Pipeta ve estas pistas → deben describir a CONYB
     pistas: [
-      "Pertenciente a aquella comisión donde su herramienta permite hacer puertas",
-      "Siempre tiene la mejor vista panorámica en las reuniones, lo cual es muy útil para alguien cuyo apodo suena a instrumento de laboratorio.",
-      "Con un alias diseñado para medir líquidos en las clases de química y su herramienta formadora, es un integrante que no pasa desapercibido."
+      "Pista 1 sobre CONYB: algo genérico y misterioso...",
+      "Pista 2 sobre CONYB: algo específico de su forma de trabajar...",
+      "Pista 3 sobre CONYB: un detalle gracioso de su personalidad 😄"
     ]
   },
   {
     id: "conyb",
     nombre: "Conyb",
     pareja_id: "pipeta",
-    foto: "https://raw.githubusercontent.com/constanza31rojas-hue/TDI/main/images/cony.png",
+    foto: "",   // ▼ URL directa de la foto de Conyb
     emoji: "🌟",
+    // Conyb ve estas pistas → deben describir a PIPETA
     pistas: [
-      "Su risa es su marca registrada: tiene una carcajada tan peculiar y contagiosa que podrías reconocerla a 10 invernadero de distancia",
-      "Entre engranajes y motores se siente como en casa",
-      "Ojo con cómo escribes el diminutivo de su nombre: es un requisito casi legal que termine siempre con 'Y'"
+      "Pista 1 sobre PIPETA: algo genérico y misterioso...",
+      "Pista 2 sobre PIPETA: algo específico de su forma de trabajar...",
+      "Pista 3 sobre PIPETA: un detalle gracioso de su personalidad 😄"
     ]
   },
   {
     id: "danip",
     nombre: "Danip",
     pareja_id: "pacita",
-    foto: "https://raw.githubusercontent.com/constanza31rojas-hue/TDI/main/images/dani.png",
+    foto: "",   // ▼ URL directa de la foto de Danip
     emoji: "🎯",
+    // Danip ve estas pistas → deben describir a PACITA
     pistas: [
-      "Este gran fichaje de la temporada viene con experiencia directiva: en su pasado lideraba a todos en otro proyecto donde la camiseta era de color celeste.",
-      "Tiene tanta energía que siempre está en movimiento, pero si su apellido fuera una comida de Fiestas Patrias, definitivamente no llevaría queso.",
-      "Sumando su pasado y el ingrediente principal de la empanada chilena más clásica, ya deberías saber quién es."
+      "Pista 1 sobre PACITA: algo genérico y misterioso...",
+      "Pista 2 sobre PACITA: algo específico de su forma de trabajar...",
+      "Pista 3 sobre PACITA: un detalle gracioso de su personalidad 😄"
     ]
   },
   {
     id: "pacita",
     nombre: "Pacita",
     pareja_id: "danip",
-    foto: "https://raw.githubusercontent.com/constanza31rojas-hue/TDI/main/images/paz.png",
+    foto: "",   // ▼ URL directa de la foto de Pacita
     emoji: "💫",
+    // Pacita ve estas pistas → deben describir a DANIP
     pistas: [
-      "Si nos guiamos estrictamente por su nombre, su sola presencia debería ser el fin de cualquier conflicto bélico.",
-      "Es una persona súper clave en el equipo, pero si te fijas en su apellido, lo primero que te da ganas de hacer es ir a tomar sol a la playa.",
-      "Esta combinación de 'tranquilidad' y 'costa del mar' la convierte en la compañera ideal para resolver cualquier problema sin perder la calma."
+      "Pista 1 sobre DANIP: algo genérico y misterioso...",
+      "Pista 2 sobre DANIP: algo específico de su forma de trabajar...",
+      "Pista 3 sobre DANIP: un detalle gracioso de su personalidad 😄"
     ]
   }
 ];
 
 // =============================================
-//  LÓGICA DEL JUEGO
+//  LÓGICA DEL JUEGO (no necesitas editar esto)
 // =============================================
 
 let jugadorActual = null;
@@ -698,25 +255,20 @@ function goToScreen(n) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// ---- Pantalla 1: Renderizar jugadores ----
 function renderJugadores() {
   const grid = document.getElementById('player-grid');
   grid.innerHTML = JUGADORES.map((j, i) => `
     <button class="player-btn" onclick="seleccionarJugador('${j.id}')">
       <span class="player-number">${String(i+1).padStart(2,'0')}</span>
       <div class="player-avatar">
-        ${j.foto
-          ? `<img src="${j.foto}" alt="${j.nombre}" onerror="this.style.display='none'">`
-          : ''
-        }
-        <span class="fallback-icon">${j.emoji}</span>
+        ${j.foto ? `<img src="${j.foto}" alt="${j.nombre}" onerror="this.style.display='none'">` : ''}
+        <span>${j.emoji}</span>
       </div>
       <span class="player-name">${j.nombre}</span>
     </button>
   `).join('');
 }
 
-// ---- Pantalla 2: Sobre + Pistas + Láminas ----
 function seleccionarJugador(id) {
   jugadorActual = JUGADORES.find(j => j.id === id);
   intentos = 0;
@@ -729,10 +281,10 @@ function renderPistas() {
   const container = document.getElementById('clues-container');
   container.innerHTML = `
     <div style="margin-bottom:16px">
-      <div style="font-family:'Bebas Neue',sans-serif; font-size:1.1rem; color:var(--gold); letter-spacing:2px; margin-bottom:4px">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--gold);letter-spacing:2px;margin-bottom:4px">
         🔍 TUS PISTAS, ${jugadorActual.nombre.toUpperCase()}
       </div>
-      <div style="font-size:0.8rem; color:var(--gold-light); opacity:0.6; letter-spacing:2px">ADIVINA QUIÉN ES TU COJEFE</div>
+      <div style="font-size:0.8rem;color:var(--gold-light);opacity:0.6;letter-spacing:2px">ADIVINA QUIÉN ES TU COJEFE</div>
     </div>
     ${jugadorActual.pistas.map((p, i) => `
       <div class="clue-item">
@@ -746,7 +298,6 @@ function renderPistas() {
 function renderLaminas() {
   const grid = document.getElementById('laminas-grid');
   const otros = JUGADORES.filter(j => j.id !== jugadorActual.id);
-
   grid.innerHTML = otros.map(j => `
     <div class="lamina" id="lamina-${j.id}" onclick="adivinar('${j.id}')">
       <div class="lamina-photo">
@@ -761,52 +312,43 @@ function renderLaminas() {
   `).join('');
 }
 
-// ---- Adivinar ----
 function adivinar(idElegido) {
   intentos++;
   const esCorrecta = idElegido === jugadorActual.pareja_id;
   const cojefe = JUGADORES.find(j => j.id === jugadorActual.pareja_id);
 
   if (esCorrecta) {
-    mostrarResultado(true, cojefe);
+    mostrarResultado(cojefe);
     lanzarConfeti();
   } else {
     const lamina = document.getElementById('lamina-' + idElegido);
     lamina.classList.remove('shake');
-    void lamina.offsetWidth; // re-trigger
+    void lamina.offsetWidth;
     lamina.classList.add('shake');
     lamina.addEventListener('animationend', () => lamina.classList.remove('shake'), { once: true });
-
-    // Breve mensaje de error sin cambiar pantalla
-    if (intentos === 1) {
-      lamina.style.opacity = '0.4';
-      lamina.style.pointerEvents = 'none';
-      lamina.style.cursor = 'not-allowed';
-    }
+    lamina.style.opacity = '0.4';
+    lamina.style.pointerEvents = 'none';
+    lamina.style.cursor = 'not-allowed';
   }
 }
 
-function mostrarResultado(exito, cojefe) {
+function mostrarResultado(cojefe) {
   const content = document.getElementById('result-content');
-
-  if (exito) {
-    content.innerHTML = `
-      <span class="result-icon">🏆</span>
-      <div class="result-title success">¡ACERTASTE!</div>
-      <div class="result-msg">¡Encontraste a tu cojefe/a!<br>Son el mejor equipo del álbum. ✨</div>
-      <div class="success-pair-card">
-        <div class="pair-sticker">${jugadorActual.emoji}🤝${cojefe.emoji}</div>
-        <div class="pair-info">
-          <div class="pair-label">Tu dupla es</div>
-          <div class="pair-names">${jugadorActual.nombre} + ${cojefe.nombre}</div>
-        </div>
+  content.innerHTML = `
+    <span class="result-icon">🏆</span>
+    <div class="result-title success">¡ACERTASTE!</div>
+    <div class="result-msg">¡Encontraste a tu cojefe/a!<br>Son el mejor equipo del álbum. ✨</div>
+    <div class="success-pair-card">
+      <div class="pair-sticker">${jugadorActual.emoji}🤝${cojefe.emoji}</div>
+      <div class="pair-info">
+        <div class="pair-label">Tu dupla es</div>
+        <div class="pair-names">${jugadorActual.nombre} + ${cojefe.nombre}</div>
       </div>
-      <div class="btn-row">
-        <button class="btn-primary" onclick="reiniciar()">JUGAR DE NUEVO</button>
-      </div>
-    `;
-  }
-
+    </div>
+    <div class="btn-row">
+      <button class="btn-primary" onclick="reiniciar()">JUGAR DE NUEVO</button>
+    </div>
+  `;
   goToScreen(4);
 }
 
@@ -816,12 +358,10 @@ function reiniciar() {
   goToScreen(1);
 }
 
-// ---- Confeti ----
 function lanzarConfeti() {
   const container = document.getElementById('confetti-container');
   const colores = ['#FFD700','#FF6B6B','#4ECDC4','#45B7D1','#96CEB4','#FFEAA7','#DDA0DD','#98D8C8'];
   container.innerHTML = '';
-
   for (let i = 0; i < 60; i++) {
     const p = document.createElement('div');
     p.className = 'confetti-piece';
@@ -834,11 +374,9 @@ function lanzarConfeti() {
     p.style.animationDelay = (Math.random() * 1.5) + 's';
     container.appendChild(p);
   }
-
   setTimeout(() => { container.innerHTML = ''; }, 6000);
 }
 
-// ---- INIT ----
 renderJugadores();
 </script>
 </body>
