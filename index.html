@@ -52,7 +52,7 @@
   .lamina { background: linear-gradient(160deg, #f8f0dc 0%, #e8d8a0 100%); border-radius: 10px; padding: 10px 8px 8px; cursor: pointer; transition: all 0.25s ease; position: relative; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.3); border: 2px solid rgba(255,215,0,0.6); animation: cardIn 0.4s ease both; }
   .lamina:nth-child(1){animation-delay:0.05s}.lamina:nth-child(2){animation-delay:0.1s}.lamina:nth-child(3){animation-delay:0.15s}.lamina:nth-child(4){animation-delay:0.2s}.lamina:nth-child(5){animation-delay:0.25s}.lamina:nth-child(6){animation-delay:0.3s}.lamina:nth-child(7){animation-delay:0.35s}
   .lamina::before { content: ''; position: absolute; inset: 0; border-radius: 8px; background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, transparent 40%, rgba(255,215,0,0.2) 100%); pointer-events: none; }
-  .lamina::after { content: '★'; position: absolute; top: 4px; right: 6px; color: var(--gold); font-size: 0.7rem; opacity: 0.7; }
+  .lamina::after { content: '\2605'; position: absolute; top: 4px; right: 6px; color: var(--gold); font-size: 0.7rem; opacity: 0.7; }
   .lamina:hover { transform: translateY(-6px) scale(1.04); box-shadow: 0 12px 28px rgba(0,0,0,0.5), 0 0 20px rgba(255,215,0,0.4); border-color: var(--gold); }
   .lamina:active { transform: scale(0.97); }
   .lamina-photo { width: 100%; aspect-ratio: 3/4; border-radius: 6px; overflow: hidden; background: linear-gradient(135deg, var(--burgundy-dark) 0%, var(--green-field) 100%); margin-bottom: 6px; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; position: relative; }
@@ -71,11 +71,12 @@
   .btn-secondary { background: transparent; color: var(--gold-light); font-family: 'Barlow Condensed', sans-serif; font-size: 0.9rem; letter-spacing: 2px; border: 1px solid rgba(255,215,0,0.3); border-radius: 8px; padding: 10px 24px; cursor: pointer; transition: all 0.2s ease; }
   .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
   .btn-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
-  .success-pair-card { background: linear-gradient(145deg, rgba(26,92,42,0.6), rgba(61,10,16,0.6)); border: 2px solid var(--gold); border-radius: 14px; padding: 20px; margin: 20px auto; max-width: 320px; display: flex; align-items: center; gap: 18px; animation: slideUp 0.5s ease 0.3s both; }
-  .pair-sticker { font-size: 2.5rem; flex-shrink: 0; }
-  .pair-info { text-align: left; }
+  .success-pair-card { background: linear-gradient(145deg, rgba(26,92,42,0.6), rgba(61,10,16,0.6)); border: 2px solid var(--gold); border-radius: 14px; padding: 20px; margin: 20px auto; max-width: 340px; display: flex; align-items: center; gap: 14px; animation: slideUp 0.5s ease 0.3s both; }
+  .pair-photo { width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid var(--gold); flex-shrink: 0; background: var(--burgundy-dark); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-family: 'Bebas Neue', sans-serif; color: var(--gold); }
+  .pair-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .pair-info { text-align: center; flex: 1; }
   .pair-label { font-family: 'Barlow Condensed', sans-serif; color: var(--gold-light); font-size: 0.75rem; letter-spacing: 3px; opacity: 0.7; text-transform: uppercase; }
-  .pair-names { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; color: var(--gold); letter-spacing: 1px; }
+  .pair-names { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; color: var(--gold); letter-spacing: 1px; }
   .lamina.shake { animation: shake 0.4s ease !important; border-color: #FF6B6B !important; }
   @keyframes fadeIn { from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)} }
   @keyframes slideDown { from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)} }
@@ -91,160 +92,107 @@
 <div id="confetti-container" class="confetti-container"></div>
 <div id="app">
   <div class="header">
-    <div class="trophy">⚽</div>
+    <div class="trophy">&#x26BD;</div>
     <h1>ÁLBUM COJEFATURAS</h1>
     <h2>TEMPORADA 2026</h2>
     <div class="gold-line"></div>
   </div>
-
   <div id="screen1" class="screen active">
     <div class="section-title">SELECCIONA TU JUGADOR</div>
-    <div class="section-subtitle">¿QUIÉN ERES TÚ?</div>
+    <div class="section-subtitle">&#xBF;QUIÉN ERES TÚ?</div>
     <div class="player-grid" id="player-grid"></div>
   </div>
-
   <div id="screen2" class="screen">
     <div class="envelope-anim">
-      <div class="envelope-icon">✉️</div>
+      <div class="envelope-icon">&#x2709;&#xFE0F;</div>
       <div class="envelope-text">ABRIENDO TU SOBRE...</div>
     </div>
     <div class="clues-card" id="clues-container"></div>
-    <div class="pick-title">¿QUIÉN ES TU COJEFE? ELIGE UNA LÁMINA</div>
+    <div class="pick-title">&#xBF;QUIÉN ES TU COJEFE? ELIGE UNA LÁMINA</div>
     <div class="laminas-grid" id="laminas-grid"></div>
     <div class="btn-row" style="margin-top:24px">
-      <button class="btn-secondary" onclick="goToScreen(1)">← Cambiar jugador</button>
+      <button class="btn-secondary" onclick="goToScreen(1)">&#x2190; Cambiar jugador</button>
     </div>
   </div>
-
   <div id="screen4" class="screen">
     <div class="result-card" id="result-content"></div>
   </div>
 </div>
-
 <script>
-// =============================================
-//  DATOS DEL JUEGO
-//
-//  LÓGICA DE PISTAS:
-//  Cada jugador tiene sus propias "pistas".
-//  Esas pistas SON LAS QUE ÉL/ELLA VE en pantalla
-//  y deben describir a su COJEFE (no a sí mismo).
-//
-//  Ejemplo: ROCI ve las pistas → esas pistas
-//  describen a VAQUERO para que Roci lo adivine.
-//  VAQUERO ve sus pistas → esas describen a ROCI.
-// =============================================
-
 const JUGADORES = [
   {
-    id: "roci",
-    nombre: "Roci",
-    pareja_id: "vaquero",
-    foto: "https://raw.githubusercontent.com/constanza31rojas-hue/TDI/main/images/roci.png",   // ▼ URL directa de la foto de Roci
-  
-    // Roci ve estas pistas → deben describir a VAQUERO
+    id: "roci", nombre: "Roci", pareja_id: "vaquero",
+    foto: "https://raw.githubusercontent.com/constanza31rojas-hue/TDI/main/images/roci.png",
     pistas: [
-      "Pista 1 sobre VAQUERO: algo genérico y misterioso...",
-      "Pista 2 sobre VAQUERO: algo específico de su forma de trabajar...",
-      "Pista 3 sobre VAQUERO: un detalle gracioso de su personalidad 😄"
+      "Tiene un lado art\u00edstico muy refinado y cl\u00e1sico: sus manos son capaces de crear hermosas melod\u00edas.",
+      "Sin embargo, por su apodo, uno esperaría verlo llegando a las reuniones a caballo, usando sombrero, botas y con un lazo en la mano.",
+      "Esta mezcla \u00fanica entre m\u00fasico de orquesta y personaje del Viejo Oeste lo hace inconfundible."
     ]
   },
   {
-    id: "vaquero",
-    nombre: "Vaquero",
-    pareja_id: "roci",
-    foto: "https://raw.githubusercontent.com/constanza31rojas-hue/TDI/main/images/vaquero.png",   // ▼ URL directa de la foto de Vaquero
-   
-    // Vaquero ve estas pistas → deben describir a ROCI
+    id: "vaquero", nombre: "Vaquero", pareja_id: "roci",
+    foto: "https://raw.githubusercontent.com/constanza31rojas-hue/TDI/main/images/vaquero.png",
     pistas: [
-      "Pista 1 sobre ROCI: algo genérico y misterioso...",
-      "Pista 2 sobre ROCI: algo específico de su forma de trabajar...",
-      "Pista 3 sobre ROCI: un detalle gracioso de su personalidad 😄"
+      "Para coordinar con ella ahora mismo vas a necesitar una buena conexi\u00f3n internacional.",
+      "Es la reina indiscutida de la planificaci\u00f3n.",
+      "A pesar de ser tan prolija, su apodo no le hace mucha justicia: le dicen como a un peque\u00f1o roedor en aquella pel\u00edcula."
     ]
   },
   {
-    id: "marti",
-    nombre: "Marti",
-    pareja_id: "fabio",
-    foto: "https://raw.githubusercontent.com/constanza31rojas-hue/TDI/main/images/marti.png",   // ▼ URL directa de la foto de Marti
-    
-    // Marti ve estas pistas → deben describir a FABIO
+    id: "marti", nombre: "Marti", pareja_id: "fabio",
+    foto: "https://raw.githubusercontent.com/constanza31rojas-hue/TDI/main/images/marti.png",
     pistas: [
-      "Pista 1 sobre FABIO: algo genérico y misterioso...",
-      "Pista 2 sobre FABIO: algo específico de su forma de trabajar...",
-      "Pista 3 sobre FABIO: un detalle gracioso de su personalidad 😄"
+      "El primer gran misterio de este jugador es su propia identidad: el nombre por el que todos lo conocen en el equipo... \u00a1no es su nombre real!",
+      "Si hay que levantar una estructura, \u00e9l es la voz de la experiencia. Conoce tanto de herramientas y armado en terreno que podr\u00eda dirigir una cuadrilla \u00e9l solo.",
+      "Entre que usa un alias como si estuviera en el programa de protecci\u00f3n de testigos y sus tremendas habilidades de maestro constructor, es un cojefe todoterreno."
     ]
   },
   {
-    id: "fabio",
-    nombre: "Fabio",
-    pareja_id: "marti",
-    foto: "https://raw.githubusercontent.com/constanza31rojas-hue/TDI/main/images/fabio.png",   // ▼ URL directa de la foto de Fabio
-    
-    // Fabio ve estas pistas → deben describir a MARTI
+    id: "fabio", nombre: "Fabio", pareja_id: "marti",
+    foto: "https://raw.githubusercontent.com/constanza31rojas-hue/TDI/main/images/fabio.png",
     pistas: [
-      "Pista 1 sobre MARTI: algo genérico y misterioso...",
-      "Pista 2 sobre MARTI: algo específico de su forma de trabajar...",
-      "Pista 3 sobre MARTI: un detalle gracioso de su personalidad 😄"
+      "Si necesitas informaci\u00f3n clasificada, ella es tu contacto. Tiene unas habilidades de espionaje tan buenas que hasta el FBI le pedir\u00eda consejos.",
+      "Su apellido tiene much\u00edsima personalidad: suena casi como una marca de lujo italiana o un plato muy sofisticado.",
+      "Se entera de todo antes que el resto. Entre sus dotes de investigadora privada y ese apellido europeo, es una agente encubierta de primer nivel."
     ]
   },
   {
-    id: "pipeta",
-    nombre: "Pipeta",
-    pareja_id: "conyb",
-    foto: "https://raw.githubusercontent.com/constanza31rojas-hue/TDI/main/images/pipeta.png",   // ▼ URL directa de la foto de Pipeta
-    
-    // Pipeta ve estas pistas → deben describir a CONYB
+    id: "pipeta", nombre: "Pipeta", pareja_id: "conyb",
+    foto: "https://raw.githubusercontent.com/constanza31rojas-hue/TDI/main/images/pipeta.png",
     pistas: [
-      "Pista 1 sobre CONYB: algo genérico y misterioso...",
-      "Pista 2 sobre CONYB: algo específico de su forma de trabajar...",
-      "Pista 3 sobre CONYB: un detalle gracioso de su personalidad 😄"
+      "Su risa es su marca registrada: tiene una carcajada tan peculiar y contagiosa que podr\u00edas reconocerla a 200 gallineros de distancia.",
+      "Entre engranajes y motores se siente como en casa.",
+      "Ojo con c\u00f3mo escribes el diminutivo de su nombre: es un requisito casi legal que termine siempre con 'Y'."
     ]
   },
   {
-    id: "conyb",
-    nombre: "Conyb",
-    pareja_id: "pipeta",
-    foto: "https://raw.githubusercontent.com/constanza31rojas-hue/TDI/main/images/cony.png",   // ▼ URL directa de la foto de Conyb
-    
-    // Conyb ve estas pistas → deben describir a PIPETA
+    id: "conyb", nombre: "Conyb", pareja_id: "pipeta",
+    foto: "https://raw.githubusercontent.com/constanza31rojas-hue/TDI/main/images/cony.png",
     pistas: [
-      "Pista 1 sobre PIPETA: algo genérico y misterioso...",
-      "Pista 2 sobre PIPETA: algo específico de su forma de trabajar...",
-      "Pista 3 sobre PIPETA: un detalle gracioso de su personalidad 😄"
+      "Pertenece a aquella comisi\u00f3n cuyo nombre una herramienta para hacer puertas puede ayudar.",
+      "Siempre tiene la mejor vista panor\u00e1mica en las reuniones, lo cual es muy \u00fatil para alguien cuyo apodo suena a instrumento de laboratorio.",
+      "Con un alias dise\u00f1ado para medir l\u00edquidos en las clases de qu\u00edmica y su herramienta formadora, es un integrante que no pasa desapercibido."
     ]
   },
   {
-    id: "danip",
-    nombre: "Danip",
-    pareja_id: "pacita",
-    foto: "https://raw.githubusercontent.com/constanza31rojas-hue/TDI/main/images/dani.png",   // ▼ URL directa de la foto de Danip
-   
-    // Danip ve estas pistas → deben describir a PACITA
+    id: "danip", nombre: "Danip", pareja_id: "pacita",
+    foto: "https://raw.githubusercontent.com/constanza31rojas-hue/TDI/main/images/dani.png",
     pistas: [
-      "Pista 1 sobre PACITA: algo genérico y misterioso...",
-      "Pista 2 sobre PACITA: algo específico de su forma de trabajar...",
-      "Pista 3 sobre PACITA: un detalle gracioso de su personalidad 😄"
+      "Si nos guiamos estrictamente por su nombre de pila, su sola presencia deber\u00eda ser el fin de cualquier conflicto b\u00e9lico.",
+      "Es una persona s\u00faper clave en el equipo, pero si te fijas en su apellido, lo primero que te da ganas de hacer es ir a tomar sol a la playa.",
+      "Esta combinaci\u00f3n de 'tranquilidad' y 'costa del mar' la convierte en la compa\u00f1era ideal para resolver cualquier problema sin perder la calma."
     ]
   },
   {
-    id: "pacita",
-    nombre: "Pacita",
-    pareja_id: "danip",
-    foto: "https://raw.githubusercontent.com/constanza31rojas-hue/TDI/main/images/paz.png",   // ▼ URL directa de la foto de Pacita
-    
-    // Pacita ve estas pistas → deben describir a DANIP
+    id: "pacita", nombre: "Pacita", pareja_id: "danip",
+    foto: "https://raw.githubusercontent.com/constanza31rojas-hue/TDI/main/images/paz.png",
     pistas: [
-      "Pista 1 sobre DANIP: algo genérico y misterioso...",
-      "Pista 2 sobre DANIP: algo específico de su forma de trabajar...",
-      "Pista 3 sobre DANIP: un detalle gracioso de su personalidad 😄"
+      "Este gran fichaje de la temporada viene con experiencia directiva: en su pasado lideraba a todos en otro proyecto donde la camiseta era de color celeste.",
+      "Tiene tanta energ\u00eda que siempre est\u00e1 en movimiento, pero si su apellido fuera una comida de Fiestas Patrias, definitivamente no llevar\u00eda queso.",
+      "Sumando su pasado y el ingrediente principal de la empanada chilena m\u00e1s cl\u00e1sica, ya deber\u00edas saber qui\u00e9n es."
     ]
   }
 ];
-
-// =============================================
-//  LÓGICA DEL JUEGO (no necesitas editar esto)
-// =============================================
 
 let jugadorActual = null;
 let intentos = 0;
@@ -255,18 +203,19 @@ function goToScreen(n) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+function avatarHtml(j, size) {
+  return '<img src="' + j.foto + '" alt="' + j.nombre + '" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.style.display=\'none\';this.parentNode.innerHTML+=\'<span style=\\\'font-size:' + size + ';font-family:Bebas Neue,sans-serif;color:var(--gold)\\\'>' + j.nombre[0] + '</span>\'">';
+}
+
 function renderJugadores() {
   const grid = document.getElementById('player-grid');
-  grid.innerHTML = JUGADORES.map((j, i) => `
-    <button class="player-btn" onclick="seleccionarJugador('${j.id}')">
-      <span class="player-number">${String(i+1).padStart(2,'0')}</span>
-      <div class="player-avatar">
-        ${j.foto ? `<img src="${j.foto}" alt="${j.nombre}" onerror="this.style.display='none'">` : ''}
-        <span>${j.emoji}</span>
-      </div>
-      <span class="player-name">${j.nombre}</span>
-    </button>
-  `).join('');
+  grid.innerHTML = JUGADORES.map((j, i) => 
+    '<button class="player-btn" onclick="seleccionarJugador(\'' + j.id + '\')">' +
+      '<span class="player-number">' + String(i+1).padStart(2,'0') + '</span>' +
+      '<div class="player-avatar">' + avatarHtml(j, '1.6rem') + '</div>' +
+      '<span class="player-name">' + j.nombre + '</span>' +
+    '</button>'
+  ).join('');
 }
 
 function seleccionarJugador(id) {
@@ -279,44 +228,39 @@ function seleccionarJugador(id) {
 
 function renderPistas() {
   const container = document.getElementById('clues-container');
-  container.innerHTML = `
-    <div style="margin-bottom:16px">
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--gold);letter-spacing:2px;margin-bottom:4px">
-        🔍 TUS PISTAS, ${jugadorActual.nombre.toUpperCase()}
-      </div>
-      <div style="font-size:0.8rem;color:var(--gold-light);opacity:0.6;letter-spacing:2px">ADIVINA QUIÉN ES TU COJEFE</div>
-    </div>
-    ${jugadorActual.pistas.map((p, i) => `
-      <div class="clue-item">
-        <div class="clue-num">${i+1}</div>
-        <div class="clue-text">${p}</div>
-      </div>
-    `).join('')}
-  `;
+  container.innerHTML =
+    '<div style="margin-bottom:16px">' +
+      '<div style="font-family:\'Bebas Neue\',sans-serif;font-size:1.1rem;color:var(--gold);letter-spacing:2px;margin-bottom:4px">' +
+        '\uD83D\uDD0D TUS PISTAS, ' + jugadorActual.nombre.toUpperCase() +
+      '</div>' +
+      '<div style="font-size:0.8rem;color:var(--gold-light);opacity:0.6;letter-spacing:2px">ADIVINA QUI\u00c9N ES TU COJEFE</div>' +
+    '</div>' +
+    jugadorActual.pistas.map((p, i) =>
+      '<div class="clue-item">' +
+        '<div class="clue-num">' + (i+1) + '</div>' +
+        '<div class="clue-text">' + p + '</div>' +
+      '</div>'
+    ).join('');
 }
 
 function renderLaminas() {
   const grid = document.getElementById('laminas-grid');
   const otros = JUGADORES.filter(j => j.id !== jugadorActual.id);
-  grid.innerHTML = otros.map(j => `
-    <div class="lamina" id="lamina-${j.id}" onclick="adivinar('${j.id}')">
-      <div class="lamina-photo">
-        ${j.foto
-          ? `<img src="${j.foto}" alt="${j.nombre}" onerror="this.style.display='none'">`
-          : `<span style="font-size:2.5rem">${j.emoji}</span>`
-        }
-        <div class="lamina-country-stripe"></div>
-      </div>
-      <div class="lamina-name">${j.nombre}</div>
-    </div>
-  `).join('');
+  grid.innerHTML = otros.map(j =>
+    '<div class="lamina" id="lamina-' + j.id + '" onclick="adivinar(\'' + j.id + '\')">' +
+      '<div class="lamina-photo">' +
+        avatarHtml(j, '2rem') +
+        '<div class="lamina-country-stripe"></div>' +
+      '</div>' +
+      '<div class="lamina-name">' + j.nombre + '</div>' +
+    '</div>'
+  ).join('');
 }
 
 function adivinar(idElegido) {
   intentos++;
   const esCorrecta = idElegido === jugadorActual.pareja_id;
   const cojefe = JUGADORES.find(j => j.id === jugadorActual.pareja_id);
-
   if (esCorrecta) {
     mostrarResultado(cojefe);
     lanzarConfeti();
@@ -334,21 +278,21 @@ function adivinar(idElegido) {
 
 function mostrarResultado(cojefe) {
   const content = document.getElementById('result-content');
-  content.innerHTML = `
-    <span class="result-icon">🏆</span>
-    <div class="result-title success">¡ACERTASTE!</div>
-    <div class="result-msg">¡Encontraste a tu cojefe/a!<br>Son el mejor equipo del álbum. ✨</div>
-    <div class="success-pair-card">
-      <div class="pair-sticker">${jugadorActual.emoji}🤝${cojefe.emoji}</div>
-      <div class="pair-info">
-        <div class="pair-label">Tu dupla es</div>
-        <div class="pair-names">${jugadorActual.nombre} + ${cojefe.nombre}</div>
-      </div>
-    </div>
-    <div class="btn-row">
-      <button class="btn-primary" onclick="reiniciar()">JUGAR DE NUEVO</button>
-    </div>
-  `;
+  content.innerHTML =
+    '<span class="result-icon">\uD83C\uDFC6</span>' +
+    '<div class="result-title success">\u00a1ACERTASTE!</div>' +
+    '<div class="result-msg">\u00a1Encontraste a tu cojefe/a!<br>Son el mejor equipo del \u00e1lbum. \u2728</div>' +
+    '<div class="success-pair-card">' +
+      '<div class="pair-photo">' + avatarHtml(jugadorActual, '1.4rem') + '</div>' +
+      '<div class="pair-info">' +
+        '<div class="pair-label">Tu dupla es</div>' +
+        '<div class="pair-names">' + jugadorActual.nombre + ' + ' + cojefe.nombre + '</div>' +
+      '</div>' +
+      '<div class="pair-photo">' + avatarHtml(cojefe, '1.4rem') + '</div>' +
+    '</div>' +
+    '<div class="btn-row">' +
+      '<button class="btn-primary" onclick="reiniciar()">JUGAR DE NUEVO</button>' +
+    '</div>';
   goToScreen(4);
 }
 
@@ -381,3 +325,4 @@ renderJugadores();
 </script>
 </body>
 </html>
+
